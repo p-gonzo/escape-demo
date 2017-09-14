@@ -20,52 +20,84 @@ constructor() {
     this.state = {
 		message: 'Have a look around the room...\nClick all four shapes in order until they disappear!',
 		background: 'chess-world.jpg',
-		firstClicked: false,
-		secondClicked: false,
-		thirdClicked: false,
-		fourthClicked: false,
+		shapeClicked: [false, false, false, false],
+		gameShapes: [1, 2, 3, 4],
+		randomShapes:[],
     }
+	this.newGameSet();
+  }
+	
+  newGameSet() {
+	  for (var i = this.state.gameShapes.length-1;i>=0;i--){
+		  let x = Math.floor(Math.random() * this.state.gameShapes.length);
+		  this.state.randomShapes.push(this.state.gameShapes[x]);
+  		  this.state.gameShapes.splice(x, 1);
+	  }
+	  console.log(this.state.randomShapes);
   }
 	
   pickShape(shapeNumber) {
+	  console.log(shapeNumber);
+	  console.log(this.state.shapeClicked);
 	  
-	  if (shapeNumber == "firstShape" &&
-		 this.state.firstClicked === false &&
-		 this.state.secondClicked === false &&
-		 this.state.thirdClicked === false &&
-		 this.state.fourthClicked === false) {
-		      this.setState({firstClicked: true});
+	  if (shapeNumber == 1) { 
+		 	if 	(this.state.shapeClicked[0] == false &&
+		 		this.state.shapeClicked[1] == false &&
+		 		this.state.shapeClicked[2] == false &&
+		 		this.state.shapeClicked[3] == false) {
+		 			console.log("1 clicked");
+		 			this.setState({shapeClicked: [true,false,false,false]});
+	  		}
+		  	else {
+			  	this.setState({shapeClicked: [false,false,false,false]});
+		  	}
 	  }
-	  if (shapeNumber == "secondShape" &&
-		 this.state.firstClicked === true &&
-		 this.state.secondClicked === false &&
-		 this.state.thirdClicked === false &&
-		 this.state.fourthClicked === false) {
-		      this.setState({secondClicked: true});
+	  if (shapeNumber == 2) { 
+		 	if 	(this.state.shapeClicked[0] == true &&
+		 		this.state.shapeClicked[1] == false &&
+		 		this.state.shapeClicked[2] == false &&
+		 		this.state.shapeClicked[3] == false) {
+					 console.log("2 clicked");
+					 this.setState({shapeClicked: [true,true,false,false]});
+	  		}
+		  	else {
+			  	this.setState({shapeClicked: [false,false,false,false]});
+		  	}
 	  }
-	  if (shapeNumber == "thirdShape" &&
-		 this.state.firstClicked === true &&
-		 this.state.secondClicked === true &&
-		 this.state.thirdClicked === false &&
-		 this.state.fourthClicked === false) {
-		      this.setState({thirdClicked: true});
+	  if (shapeNumber == 3) { 
+		 	if 	(this.state.shapeClicked[0] == true &&
+		 		this.state.shapeClicked[1] == true &&
+		 		this.state.shapeClicked[2] == false &&
+		 		this.state.shapeClicked[3] == false) {
+					 console.log("3 clicked");
+					 this.setState({shapeClicked: [true,true,true,false]});
+	  		}
+		  	else {
+			  	this.setState({shapeClicked: [false,false,false,false]});
+		  	}
 	  }
-	  if (shapeNumber == "fourthShape" &&
-		 this.state.firstClicked === true &&
-		 this.state.secondClicked === true &&
-		 this.state.thirdClicked === true &&
-		 this.state.fourthClicked === false) {
-		      this.setState({fourthClicked: true});
-		  	  this.setState({message: "You've Escaped The Room!"});
-		      this.setState({background: "beach.jpg"});
+	  if (shapeNumber == 4) { 
+		 	if 	(this.state.shapeClicked[0] == true &&
+		 		this.state.shapeClicked[1] == true &&
+		 		this.state.shapeClicked[2] == true &&
+		 		this.state.shapeClicked[3] == false) {
+					 console.log("4 clicked");
+					 this.setState({shapeClicked: [true,true,true,true]});
+					 this.setState({message: "You've Escaped The Room!"});
+					 this.setState({background: "beach.jpg"});
+	  		}
+		  	else {
+			  	this.setState({shapeClicked: [false,false,false,false]});
+		  	}
 	  }
   }
+
 	
 render() {
 	return (
 		<View>
 		<Pano source={asset(this.state.background)}/>
-		<PointLight intensity={2} style={{transform:[{translate:[0, 0, 0]}]}} />
+		<PointLight intensity={1.5} style={{transform:[{translate:[0, 0, 0]}]}} />
         
         <Text
 			style={{
@@ -80,10 +112,10 @@ render() {
 			</Text>
 
 		<VrButton
-			onClick={() => this.pickShape("firstShape")}>
+			onClick={() => this.pickShape(this.state.randomShapes[0])}>
 			<Box
 				lit={true}
-				wireframe={this.state.firstClicked}
+				wireframe={this.state.shapeClicked[this.state.randomShapes[0] - 1]}
 				dimWidth={0.8}
 				dimHeight={0.3}
 				dimDepth={0.5}
@@ -97,10 +129,10 @@ render() {
 			/>
 		</VrButton>
 		<VrButton
-			onClick={() => this.pickShape("secondShape")}>
+			onClick={() => this.pickShape(this.state.randomShapes[1])}>
 			<Cylinder
 				lit={true}
-				wireframe={this.state.secondClicked}
+				wireframe={this.state.shapeClicked[this.state.randomShapes[1] - 1]}
 				radiusTop={0.2}
 				radiusBottom={0.2}
 				dimHeight={0.6}
@@ -115,10 +147,10 @@ render() {
 			/>
 		</VrButton>
 		<VrButton
-			onClick={() => this.pickShape("thirdShape")}>
+			onClick={() => this.pickShape(this.state.randomShapes[2])}>
 			<Sphere
 				lit={true}
-				wireframe={this.state.thirdClicked}
+				wireframe={this.state.shapeClicked[this.state.randomShapes[2] - 1]}
 				radius={0.3}
 				widthSegments={20}
 				heightSegments={12}
@@ -130,10 +162,10 @@ render() {
 			/>
 		</VrButton>
 		<VrButton
-			onClick={() => this.pickShape("fourthShape")}>
+			onClick={() => this.pickShape(this.state.randomShapes[3])}>
 			<Box
 				lit={true}
-				wireframe={this.state.fourthClicked}
+				wireframe={this.state.shapeClicked[this.state.randomShapes[3] - 1]}
 				dimWidth={0.8}
 				dimHeight={0.3}
 				dimDepth={0.5}
