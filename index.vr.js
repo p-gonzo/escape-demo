@@ -26,26 +26,24 @@ constructor() {
     }
 	this.newGameSet();
   }
-	
+
+  //function to randomize shape order at the start of each game (page refresh)
   newGameSet() {
 	  for (var i = this.state.gameShapes.length-1;i>=0;i--){
 		  let x = Math.floor(Math.random() * this.state.gameShapes.length);
 		  this.state.randomShapes.push(this.state.gameShapes[x]);
   		  this.state.gameShapes.splice(x, 1);
 	  }
-	  console.log(this.state.randomShapes);
+	  //console.log(this.state.randomShapes);
   }
 	
   pickShape(shapeNumber) {
-	  console.log(shapeNumber);
-	  console.log(this.state.shapeClicked);
+	  //console.log(shapeNumber);
+	  //console.log(this.state.shapeClicked.toString());
 	  
 	  if (shapeNumber == 1) { 
-		 	if 	(this.state.shapeClicked[0] == false &&
-		 		this.state.shapeClicked[1] == false &&
-		 		this.state.shapeClicked[2] == false &&
-		 		this.state.shapeClicked[3] == false) {
-		 			console.log("1 clicked");
+		 	if 	(this.state.shapeClicked.toString() == "false,false,false,false") {
+		 			//console.log("1 clicked");
 		 			this.setState({shapeClicked: [true,false,false,false]});
 	  		}
 		  	else {
@@ -53,11 +51,8 @@ constructor() {
 		  	}
 	  }
 	  if (shapeNumber == 2) { 
-		 	if 	(this.state.shapeClicked[0] == true &&
-		 		this.state.shapeClicked[1] == false &&
-		 		this.state.shapeClicked[2] == false &&
-		 		this.state.shapeClicked[3] == false) {
-					 console.log("2 clicked");
+		 	if 	(this.state.shapeClicked.toString() == "true,false,false,false") {
+					 //console.log("2 clicked");
 					 this.setState({shapeClicked: [true,true,false,false]});
 	  		}
 		  	else {
@@ -65,11 +60,8 @@ constructor() {
 		  	}
 	  }
 	  if (shapeNumber == 3) { 
-		 	if 	(this.state.shapeClicked[0] == true &&
-		 		this.state.shapeClicked[1] == true &&
-		 		this.state.shapeClicked[2] == false &&
-		 		this.state.shapeClicked[3] == false) {
-					 console.log("3 clicked");
+		 	if 	(this.state.shapeClicked.toString() == "true,true,false,false") {
+					 //console.log("3 clicked");
 					 this.setState({shapeClicked: [true,true,true,false]});
 	  		}
 		  	else {
@@ -77,11 +69,8 @@ constructor() {
 		  	}
 	  }
 	  if (shapeNumber == 4) { 
-		 	if 	(this.state.shapeClicked[0] == true &&
-		 		this.state.shapeClicked[1] == true &&
-		 		this.state.shapeClicked[2] == true &&
-		 		this.state.shapeClicked[3] == false) {
-					 console.log("4 clicked");
+		 	if 	(this.state.shapeClicked.toString() == "true,true,true,false") {
+					 //console.log("4 clicked");
 					 this.setState({shapeClicked: [true,true,true,true]});
 					 this.setState({message: "You've Escaped The Room!"});
 					 this.setState({background: "beach.jpg"});
